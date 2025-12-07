@@ -1,49 +1,30 @@
-const API_KEY = "AIzaSyDbpf_Ymmwrrr0lDb6h4XRngmUw027nuf4";
+const API_KEY = "AlzaSyDbpf_Ymmwrrrr0Ibb6h4XRngmUw027nuf4";
 
 async function askAI(message) {
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
+  const url =
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
+    API_KEY;
 
-    const res = await fetch(url, {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json" 
-        },
-        body: JSON.stringify({
-            contents: [
-                { parts: [{ text: message }] }
-            ]
-        })
-    });
+  const body = {
+    contents: [
+      {
+        parts: [{ text: message }],
+      },
+    ],
+  };
 
-    const data = await res.json();
-    return data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI Error";
-}
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
-// ====== EVENT SEND MESSAGE ======
-document.getElementById("send-button").addEventListener("click", async () => {
-    const input = document.getElementById("user-input");
-    const msg = input.value.trim();
-    if (!msg) return;
+  const data = await res.json();
 
-    appendMessage("You", msg);
-    input.value = "";
-
-    showTyping(true);
-    const reply = await askAI(msg);
-    showTyping(false);
-
-    appendMessage("AI", reply);
-});
-
-// ====== DISPLAY MESSAGE ======
-function appendMessage(sender, text) {
-    const chatBox = document.getElementById("chat-box");
-    chatBox.innerHTML += `
-        <div class="msg"><b>${sender}:</b> ${text}</div>
-    `;
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function showTyping(show) {
-    document.getElementById("typing-indicator").style.display = show ? "flex" : "none";
+  return (
+    data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+    "Maaf, AI tidak bisa merespon."
+  );
 }
