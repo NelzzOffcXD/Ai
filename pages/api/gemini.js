@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
     // Fetch ke Gemini API
     const response = await fetch(
-      "https://vercel.com/nelzzs-projects/ai/settings/environment-variables" + apiKey,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=API_KEY_LU" + apiKey,
       {
         method: "POST",
         headers: {
